@@ -629,8 +629,8 @@ section.services-section {
 /* portfolio section */
 .portfolio-template.grid {
   margin-top: 6rem;
-  grid-template-columns: repeat(3, 1fr);
-  grid-gap: 3rem;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 1rem;
 }
 .portfolio-nav ul {
   display: flex;
@@ -656,59 +656,39 @@ section.services-section {
   background: var(--main-color);
 }
 .portfolio-item{
+  position: relative;
   cursor: pointer;
-  max-height: 230px;
+  max-height: 210px;
+  min-height: 210px;
   overflow: hidden;
-  border: 1px solid var(--main-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 1px 1px 4px 0px var(--black);
 }
 .portfolio-item .items-details{
   display: none;
 }
-.portfolio-item-inner{
-  position: relative;
-  height: 100%;
-}
+
 .portfolio-item-hover-content {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 80%;
-  height: 80%;
-  flex-direction: column;
-  transform: translate(-50%,-50%);
-  opacity: 0;
-  z-index: 1;
-  transition: all 0.5s ease;
-}
-.portfolio-item-hover-content::after,
-.portfolio-item-hover-content::before{
-  content:'';
-  position: absolute;
-  width: 0;
-  height: 0;
-  transition: all 0.5s ease;
-  z-index: 10000;
-}
-.portfolio-item-hover-content::after{
-  border-right: 2px solid var(--main-color);
-  border-bottom: 2px solid var(--main-color);
-  right: -2px;
-  bottom: 0;
-}
-.portfolio-item-hover-content::before{
-  border-left: 2px solid var(--main-color);
-  border-top: 2px solid var(--main-color);
-  left: 0;
-  top: -2px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+    opacity: 0;
+    z-index: 2;
+    transition: all 0.5s ease;
 }
 .portfolio-item-inner{
-  position: relative;
   background: #f1f0f0;
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 100%;
 }
-.portfolio-item-inner:after{
+.portfolio-item:after{
   content: '';
   width: 100%;
   height: 100%;
@@ -717,10 +697,10 @@ section.services-section {
   background: rgba(0, 0, 0, 0.6);
   position: absolute;
   opacity: 0;
-  z-index: 0;
+  z-index: 1;
   transition: all 0.5s ease;
 }
-.portfolio-item:hover .portfolio-item-inner:after{
+.portfolio-item:hover:after{
   opacity: 1;
 }
 .portfolio-item:hover .portfolio-item-hover-content{
@@ -732,18 +712,35 @@ section.services-section {
   width: 100%;
   height: 100%;
 }
-.portfolio-item-hover-content p{
-  font-size: 1.6rem;
-  margin-top: 1rem;
-  color: var(--white)
+.portfolio-item-inner img{
+    transition: 0.5s ease;
 }
+.portfolio-item:hover .portfolio-item-inner img{
+    transform: scale(1.6) rotate(-30deg);
+}
+.portfolio-item-hover-content p {
+    font-size: 1.6rem;
+    margin-top: 1rem;
+    color: var(--white);
+    transform: translateY(-48px) scale(0.5);
+    opacity: 0;
+    transition: 0.3s ease;
+    transition-delay: 0.2s;
+}
+.portfolio-item:hover .portfolio-item-hover-content p{
+    transform: translateY(0px) scale(1);
+    opacity: 1;
+}
+
 .portfolio-item-hover-content button{
-  outline: none;
-  border: none;
-  padding: 0.4rem 1.5rem;
-  background: var(--main-color);
-  color: var(--white);
-  border-radius: 3rem;
+    outline: none;
+    width: 5rem;
+    height: 5rem;
+    border: none;
+    background: var(--main-color);
+    color: var(--white);
+    border-radius: 50%;
+    font-size: 2rem;
 }
 .portfolio-item.show{
   display: block;
@@ -763,6 +760,9 @@ section.services-section {
     transform: scale(1);
   }
 }
+
+
+
 /* items popup */
 .mainitemsPopUp{
   width: 100%;
@@ -1161,6 +1161,174 @@ section.services-section {
   background: var(--main-color);
   color: var(--white);
 }
+
+/* photos gellary */
+.photos-gellary{
+    background:var(--normal-gray);
+}
+.photos-gellary-inner{
+    width: 100%;
+    margin-top: 5rem;
+    grid-template-columns: repeat(4,1fr);
+    grid-gap: 1.5rem;
+}
+
+.photos-item {
+    position: relative;
+    min-height: 230px;
+    max-height: 230px;
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+    cursor: pointer;
+}
+.photos-item img {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    min-height: 100%;
+}
+.photos-item span{
+    position: absolute;
+    left: 0px;
+    bottom: 0px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    color: var(--white);
+    z-index: 1;
+    opacity: 0;
+    transition: 0.3s ease-in-out;
+    transition-delay: 0.2s;
+}
+
+.photos-item::after {
+    content: "";
+    position: absolute;
+    left: -65px;
+    bottom: -60px;
+    width: 0%;
+    height: 0%;
+    background: var(--main-color);
+    border-radius: 50%;
+    z-index: 0;
+    transition: 0.4s ease-in-out;
+}
+
+.photos-item:hover::after {
+    width: 165%;
+    height: 165%;
+}
+
+.photos-item:hover span {
+    opacity: 1;
+}
+
+/* photos popup */
+
+.gellery-popup{
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.8);
+    overflow: hidden;
+    z-index: 1200;
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+.gellery-popup .gellery-popup-img{
+    max-width: 80vw;
+    width: 100%;
+    max-height: 80vh;
+    height: 100%;
+}
+.gellery-popup.show{
+    display: flex;
+}
+.gellery-popup .gellery-popup-img img{
+    max-width: 100%;
+    width: auto;
+    max-height: 100%;
+    height: auto;
+    background: var(--white);
+    padding: 1rem;
+    box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.40);
+}
+.gellery-popup .popup-photos-controller button{
+    border: none;
+    outline: none;
+    width: 3.5rem;
+    height: 3.5rem;
+    background: var(--white);
+    border-radius: 5px;
+    cursor: pointer;
+}
+.gellery-popup .popup-photos-controller button i{
+    font-size: 2.2rem;
+    color:var(--black);
+}
+.gellery-popup .popup-photos-controller button,
+.gellery-popup .popup-photos-controller .photos-counter{
+    position: absolute;
+}
+.gellery-popup .popup-photos-controller .prev,
+.gellery-popup .popup-photos-controller .next{
+    left: 50%;
+    transform: translate(-50%);
+}
+.gellery-popup .popup-photos-controller .prev{
+    transform: translate(-50%) rotate(180deg);
+}
+
+span.photos-counter {
+    color: var(--white);
+    font-size: 1.5rem;
+}
+
+div#gellery-preloader {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    background: var(--white);
+}
+div#gellery-preloader.hide{
+    display: none;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /* preloader */
 #preloader {
