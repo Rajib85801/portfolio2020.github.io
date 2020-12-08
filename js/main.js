@@ -285,6 +285,79 @@ const closePopUpBox = () => {
   },500);
 }
 
+// gellery photos popup
+const gellaryItems = document.querySelectorAll('.photos-item');
+const gelleryPopup = document.querySelector('.gellery-popup');
+const popUpImg = gelleryPopup.querySelector('.gellery-popup-img img');
+const popUpImgClose = gelleryPopup.querySelector('.popup-photos-controller .close-photos');
+const popUpImgNext = gelleryPopup.querySelector('.popup-photos-controller .next');
+const popUpImgPrev = gelleryPopup.querySelector('.popup-photos-controller .prev');
+const popUpImgCounter = gelleryPopup.querySelector('.popup-photos-controller .photos-counter');
+let slideGelleryPhotos;
+
+gellaryItems.forEach( (photoItem,photoIndex) =>{
+    photoItem.addEventListener('click',() => {
+        slideGelleryPhotos = photoIndex;
+        // hide body scroll
+        stopScrolling();
+        // show photos popup
+        gelleryPopup.classList.add('show');
+        gelleryPhotosSlide();
+    })
+})
+
+
+const popUpControllerPosition = () => {
+    let pupUpWidth = window.innerWidth;
+    let pupUpHeight = window.innerHeight;
+    let pupUpImgWidth = popUpImg.clientWidth;
+    let pupUpImgHeight = popUpImg.clientHeight;
+    let leftRight = ((pupUpWidth - pupUpImgWidth) / 2)
+    let topBottom = ((pupUpHeight - pupUpImgHeight) / 2)
+    popUpImgClose.style.cssText = `top: ${topBottom - 40}px;right: ${leftRight}px;`;
+    popUpImgCounter.style.cssText = `bottom: ${topBottom - 25}px;right: ${leftRight}px;`;
+    popUpImgPrev.style.cssText = `bottom: ${topBottom - 40}px;margin-left: -25px;`;
+    popUpImgNext.style.cssText = `bottom: ${topBottom - 40}px;margin-left: 25px;`;
+}
+
+const gelleryPhotosSlide = () => {
+    let currentItemImgScr = gellaryItems[slideGelleryPhotos].querySelector('img').src;
+    let convertImgScr = currentItemImgScr.split('/');
+    convertImgScr = convertImgScr[convertImgScr.length - 1];
+    popUpImg.src = `images/gellery/${convertImgScr}`;
+    popUpImg.addEventListener('load',() => {
+        document.querySelector('#gellery-preloader').classList.add('hide');
+    })
+    popUpImgCounter.innerHTML = `${slideGelleryPhotos + 1} of ${gellaryItems.length}`;
+    // popup controller linement
+    popUpControllerPosition();
+}
+
+const changePhotos = (target) => {
+    if(target == 'next'){
+        if(slideGelleryPhotos < gellaryItems.length - 1){
+            slideGelleryPhotos++;
+        }else{
+            slideGelleryPhotos = 0; 
+        }
+    }
+    if(target == 'prev'){
+        if(slideGelleryPhotos > 0){
+            slideGelleryPhotos--;
+        }else{
+            slideGelleryPhotos = gellaryItems.length - 1; 
+        }
+    }
+    gelleryPhotosSlide();
+}
+
+const closePhotos = () => {
+    gelleryPopup.classList.remove('show');
+    stopScrolling();
+}
+
+
+
 
 
 // preloader
